@@ -1,0 +1,58 @@
+/* src/components/Item/Item.css */
+
+
+.product-card {
+   
+    width: 220px; 
+    background-color: #ffffff; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    
+    /* Layout */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s;
+    overflow: hidden; 
+}
+
+.product-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos de texto y precio */
+.item-price {
+    font-size: 1.2em;
+    color: #6F4E37; 
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Estilos de los botones "Ver Detalle" / "Enviar al Carrito" */
+.add-button {
+    background-color: #6F4E37;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+
+.add-button:hover:not(:disabled) {
+    background-color: #4b3832;
+}
+
+/*Estilos de imagen  */
+ .product-card img {
+    width: 100%;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
+} 

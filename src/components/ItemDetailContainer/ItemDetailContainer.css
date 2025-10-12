@@ -1,0 +1,24 @@
+/* src/components/ItemDetailContainer/ItemDetailContainer.css */
+
+.item-detail-container {
+    
+    background-color: #f7f5ff; 
+    min-height: 85vh; 
+    padding: 60px 20px;
+    
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-detail-container h2 {
+    
+    color: #6F4E37; 
+    margin-top: 40px;
+    font-size: 2em;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
