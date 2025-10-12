@@ -28,7 +28,7 @@ import { Categorias } from './components/Categorias/Categorias';
 
 function App() {
   
-  // 👈 1. CLAVE: INICIALIZAR EL HOOK para usar sus variables
+  // INICIALIZAR EL HOOK para usar sus variables
   //const { cart, addToCart, clearCart, isCartVisible, toggleCartVisibility } = useCart();
 
   return (
