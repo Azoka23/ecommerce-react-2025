@@ -11,7 +11,7 @@ import { Checkout } from './components/Checkout/Checkout';
 import { HomeButton } from './components/HomeButton/HomeButton';
 import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
-import { ItemListContainer } from './components/ItemListContainer/itemListContainer';
+import { ItemListContainer } from './components/ItemListContainer/ItemListContainer';
 import { ItemDetailContainer } from './components/ItemDetailContainer/ItemDetailContainer'; 
 
 
