@@ -22,7 +22,7 @@ const ShoppingCart = () => {
       );
   }
   
-  // 2. SI ESTÁ ABIERTO (Visible): Retornamos SOLO el panel completo.
+  // 2. SI ESTÁ ABIERTO (Visible): Retorna SOLO el panel completo.
   //    El botón 'X' o un nuevo clic en el flotante (ahora oculto) lo cambiará a FALSE.
   return (
     <aside className="shopping-cart">
