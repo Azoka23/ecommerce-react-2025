@@ -1,30 +1,95 @@
-// src/Hooks/useCart.js
-
 import { useState } from 'react';
 
 export function useCart() {
   const [cart, setCart] = useState([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
 
-  // La función recibe el producto completo (incluyendo el stock)
-  const addToCart = (productToAdd) => {
+  //  AÑADIR AL CARRITO 
+  const addToCart = (productToAdd, quantity) => {
     
-    // 1. Contar cuántas veces el producto ya está en el carrito
-    const currentCount = cart.filter(item => item.id === productToAdd.id).length;
-    
-    // 2. Determinar la nueva cantidad si se agrega uno más
-    const newCount = currentCount + 1;
+    const productId = String(productToAdd.id); 
+    const itemQuantity = Number(quantity); 
 
-    
-    if (newCount > productToAdd.stock) {
-      alert(`Stock insuficiente. Ya tienes ${currentCount} unidad(es) en el carrito y solo hay ${productToAdd.stock} disponibles.`);
-      return; // Detener la adición
+    // Verificamos si ya existe, comparando siempre como Strings
+    const isInCart = cart.some(item => String(item.id) === productId);
+
+    if (isInCart) {
+        // SI YA EXISTE (ACTUALIZAR CANTIDAD) 
+        
+        let stockAlert = false; 
+
+        setCart(prevCart => {
+            const newCart = prevCart.map(item => {
+                if (String(item.id) === productId) { 
+                    const newQuantity = item.quantity + itemQuantity;
+                    
+                    // Validación de stock
+                    if (newQuantity > productToAdd.stock) {
+                        alert(`Stock insuficiente. Máximo disponible: ${productToAdd.stock} unidades.`);
+                        stockAlert = true; 
+                        return item; 
+                    }
+                    
+                    return { ...item, quantity: newQuantity };
+                }
+                return item;
+            });
+            
+            // Si hubo alerta, devolvemos el estado anterior (prevCart) sin cambios.
+            if (stockAlert) {
+                return prevCart;
+            }
+
+            // Si no hubo alerta, devolvemos el nuevo array (newCart).
+            return newCart;
+        });
+
+    } else {
+        // SI ES NUEVO (AGREGAR CON CANTIDAD)
+        
+        if (itemQuantity > productToAdd.stock) {
+            alert(`No puedes agregar ${itemQuantity}. Solo hay ${productToAdd.stock} disponibles.`);
+            return;
+        }
+        
+        // Agrega el producto asegurando que el ID sea String y quantity Number
+        const newProduct = { ...productToAdd, id: productId, quantity: itemQuantity }; 
+        
+        // Usa la función prevCart para agregar el nuevo ítem
+        setCart(prevCart => [...prevCart, newProduct]);
     }
-
-    // 4. Si pasa la validación, agregar el producto (mantiene tu lógica original)
-    setCart((prevCart) => [...prevCart, productToAdd]);
   };
 
+  //  ELIMINA UN ÍTEM COMPLETO
+  const removeItem = (productId) => {
+    setCart(prevCart => prevCart.filter(item => String(item.id) !== String(productId)));
+  };
+  
+  //  MODIFICA LA CANTIDAD DE UN ÍTEM
+  const updateItemQuantity = (productId, newQuantity) => {
+    const newQuantityNumber = Number(newQuantity);
+    setCart(prevCart => 
+      prevCart.map(item => {
+        if (String(item.id) === String(productId)) {
+          const quantityToSet = Math.min(newQuantityNumber, item.stock);
+          
+          if (newQuantityNumber > item.stock) {
+             alert(`Cantidad limitada por stock. Máximo: ${item.stock}.`);
+          }
+          
+          return { ...item, quantity: quantityToSet };
+        }
+        return item;
+      }).filter(item => item.quantity > 0) 
+    );
+  };
+  
+  //  OBTIENE EL NÚMERO TOTAL DE ÍTEMS
+  const getTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+  
+  // OTRAS FUNCIONES
   const clearCart = () => {
     setCart([]);
   };
@@ -33,12 +98,15 @@ export function useCart() {
     setIsCartVisible(!isCartVisible);
   };
 
-  // Retornamos todas las variables y funciones
+  // Retorna todas las variables y funciones
   return {
     cart,
     addToCart,
+    removeItem,
+    updateItemQuantity, 
     clearCart,
     isCartVisible,
     toggleCartVisibility,
+    getTotalItems,
   };
 }

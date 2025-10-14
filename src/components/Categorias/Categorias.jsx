@@ -6,13 +6,13 @@ import './Categorias.css';
 
 export const Categorias = () => {
     
-    // ✅ DEFINICIÓN DE CATEGORÍAS usando los valores exactos del JSON
+    
     const categorias = [
-        // 🛑 CLAVE: El 'id' (ruta) debe ser igual al 'type' del JSON
+        // CLAVE: El 'id' (ruta) debe ser igual al 'type' del JSON
         { id: 'grano', nombre: 'Café en Grano' },
         { id: 'molido', nombre: 'Café Molido' },
         { id: 'capsulas', nombre: 'Cápsulas' },
-        // Si añades más tipos a tu JSON (ej: 'instantaneo'), debes agregarlo aquí.
+        
     ];
 
     return (

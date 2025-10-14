@@ -9,7 +9,7 @@ export const Contacto = () => {
         <main className="contacto-section">
             <h2> Contactate  con Nosotros</h2>
             <p>Teléfono: 0800-REACT-COFFEE</p>
-            {/* Aquí puedes añadir un formulario de contacto */}
+            {/* Aca puedo  añadir un formulario de contacto */}
         <h3>Nuestras Redes</h3>
             <div className="social-icons">
                 

@@ -8,6 +8,7 @@ nav {
     display: inline-block; 
 }
 
+
 nav ul {
     list-style: none;
     padding: 0;
@@ -35,4 +36,18 @@ nav a:hover {
     
     color: #000000; 
     border-bottom: 2px solid #5a4038; 
+}
+
+.cart-nav-image-icon {
+    
+    color: #FAF9F6; 
+    width: 28px; 
+    height: 28px; 
+    
+    transition: transform 0.3s ease-in-out; 
+    vertical-align: middle; 
+}
+.cart-nav-image-icon:hover {
+    color: #000000; 
+    transform: scale(1.50); 
 }

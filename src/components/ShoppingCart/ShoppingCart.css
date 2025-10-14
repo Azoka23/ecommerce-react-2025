@@ -1,63 +1,27 @@
 /* src/components/ShoppingCart/ShoppingCart.css */
 
 .shopping-cart {
-  /* 🛑 AJUSTES CLAVE PARA EL CENTRADO Y POSICIÓN FIJA */
-  position: fixed; /* 1. Lo fija a la ventana del navegador */
-  top: 50%;        /* 2. Mueve el borde superior al 50% de la ventana */
-  left: 50%;       /* 3. Mueve el borde izquierdo al 50% de la ventana */
-  transform: translate(-50%, -50%); /* 4. Lo centra en base a su propio tamaño */
-  z-index: 1000;   /* 5. Lo pone por encima de todo el contenido */
+ 
   
-  /* --- Estilos de Contenedor (Los tuyos, ajustados para tamaño) --- */
+  position: relative; 
+  margin-bottom: 60px; 
+  margin-left: auto;
+  margin-right: auto;
+  
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 20px;
-  
-  /* Ya no necesitamos margin-top */
-  /* margin-top: 20px; */ 
+  padding: 30px; 
   
   background-color: #f9f9f9;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Sombra más fuerte para modal */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
   
-  /* 💡 Ajustes de tamaño para que se vea bien centrado en cualquier pantalla */
-  width: 90%;          /* Ocupa el 90% del ancho del viewport */
-  max-width: 400px;    /* Limita el ancho máximo para que no sea enorme */
-  max-height: 85vh;    /* Limita la altura máxima a 85% de la ventana */
-  overflow-y: auto;    /* Permite scrollear dentro del carrito si hay muchos ítems */
-}
-
-/* Estilos para el botón del carrito y el contador */
-.cart-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  padding: 10px;
-  font-size: 2.5rem; /* Más grande */
-  cursor: pointer;
-  z-index: 100;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para que destaque */
-  transition: transform 0.3s ease; /* Efecto de transición al pasar el mouse */
-}
-
-.cart-button:hover {
-  transform: scale(1.1); /* Efecto de zoom al pasar el mouse */
-}
-
-.cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #ff3860; /* Un color más llamativo */
-  color: white;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 0.9rem; /* Un poco más grande para mejor lectura */
-  min-width: 25px;
-  height: 25px;
+  
+  width: 90%;          
+  max-width: 500px; 
+  
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+
+  
 }

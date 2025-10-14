@@ -28,7 +28,8 @@ export const ItemDetailContainer = () => {
             })
             .then(products => {
                 
-                const foundProduct = products.find(p => p.id === itemId);
+                //const foundProduct = products.find(p => p.id === itemId);
+const foundProduct = products.find(p => String(p.id) === String(itemId));
 
                 setTimeout(() => {
                     if (foundProduct) {

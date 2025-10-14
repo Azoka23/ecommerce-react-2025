@@ -2,21 +2,25 @@ import './Item.css';
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../../context/CartContext'; 
 
-
 export const Item=({ id, name, type, price, stock, image, children }) => {
-const { addToCart } = useCartContext(); 
+    
+    // Importo la función addToCart del Contexto
+    const { addToCart } = useCartContext(); 
     const isOutOfStock = stock === 0;
-    //funcion para el carrito
+
+    // Manejador del Evento de Agregar al Carrito
     const handleAddToCart = () => {
-        // Creamos el objeto con los datos necesarios (incluimos image para el carrito)
-        const productToAdd = { id, name, price, image, stock }; 
-        addToCart(productToAdd);
+        //Crea el objeto asegurando que el ID sea String
+        const productToAdd = { id: String(id), name, price, image, stock }; 
+        
+        // Enviamos el producto y la cantidad '1' (que es correcto para esta vista)
+        addToCart(productToAdd, 1); 
     };
     
     return(
- <article className="product-card"> 
-     
-        <h2>{name} </h2>
+        <article className="product-card"> 
+            
+            <h2>{name} </h2>
             <p className="item-type">Tipo: {type}</p>
             <p className="item-price">Precio: **${price}**</p>
             
@@ -24,20 +28,17 @@ const { addToCart } = useCartContext();
                 Stock: {isOutOfStock ? 'Agotado' : stock}
             </p>
             
-        <Link to={`/detail/${id}`}> 
-        
-        <button className="add-button" >
-                Ver Detalle
-            
-            </button>
+            <Link to={`/detail/${id}`}> 
+                <button className="add-button" >
+                    Ver Detalle
+                </button>
             </Link>
 
-             <button 
+            <button 
                 className="add-button" 
                 disabled={isOutOfStock}
-            onClick={handleAddToCart}
+                onClick={handleAddToCart}
             >
-
                 {isOutOfStock ? 'SIN STOCK' : 'Enviar al Carrito'}
             </button>
         </article>

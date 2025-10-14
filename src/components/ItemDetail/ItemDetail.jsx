@@ -42,7 +42,7 @@ export const ItemDetail = ({ id, name, type, price, description, stock, image })
                 <button 
                     className="detail-add-button"
                     disabled={isOutOfStock}
-                    //  Llamar a la función recién definida
+                    //  Llama a la función recién definida
                     onClick={handleAddToCart} 
                 >
                     {isOutOfStock ? 'SIN STOCK' : 'Agregar al Carrito'}
