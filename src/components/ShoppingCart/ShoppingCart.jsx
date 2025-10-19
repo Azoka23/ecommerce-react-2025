@@ -3,7 +3,7 @@ import './ShoppingCart.css';
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../../context/CartContext'; 
  
-const ShoppingCart = () => {
+ const ShoppingCart = () => {
   
   const { 
     cart, 

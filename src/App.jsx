@@ -13,77 +13,77 @@ import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
 import { ItemListContainer } from './components/ItemListContainer/ItemListContainer';
 import { ItemDetailContainer } from './components/ItemDetailContainer/ItemDetailContainer'; 
-
-
-                      
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';    
 import './components/ShoppingCart/ShoppingCart.css'; 
 import { CartProvider } from './context/CartContext'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { AuthProvider } from './context/AuthContext.jsx'; 
+import { Login } from './components/Login/Login'; 
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
 import { Categorias } from './components/Categorias/Categorias'; 
 
 function App() {
   
-  // INICIALIZAR EL HOOK para usar sus variables
-  //const { cart, addToCart, clearCart, isCartVisible, toggleCartVisibility } = useCart();
-
   return (
-    <>
-   
     <BrowserRouter>
-     <CartProvider> 
-      <div className="app-main-layout"> 
-        
-        {/*  HEADER: Pasar la función para abrir el carrito */}
-        <Header/>
-        
-        <Routes>
-          <Route path="/" element={<ItemListContainer 
-          titulo={"Bienvenidos a la tienda de Cafe"}
-           />}
-          />
-        
-          <Route path="/detail/:id"  element={<ItemDetailContainer
-          titulo={"Bienvenidos a la tienda de Cafe"}
-          />}
-        
-        />
-
-        
-        
-        {/*  RUTA Categorías */}
-            <Route path="/categorias" element={<Categorias />} />
+      
+      <AuthProvider>
+        <CartProvider> 
+          <div className="app-main-layout"> 
             
-            <Route path="/categorias/:categoriaId" element={<ItemListContainer 
-            titulo={"Productos Filtrados"}
+            <Header/>
+            
+            <Routes>
+              {/* =================================================== */}
+              {/* RUTAS PÚBLICAS */}
+              {/* =================================================== */}
+              
+              <Route 
+                path="/" 
+                element={<ItemListContainer titulo={"Bienvenidos a la tienda de Cafe"} />}
+              />
+              
+              <Route 
+                path="/detail/:id"  
+                element={<ItemDetailContainer titulo={"Bienvenidos a la tienda de Cafe"} />}
+              />
+
+              <Route path="/categorias" element={<Categorias />} />
+              <Route path="/categorias/:categoriaId" element={<ItemListContainer titulo={"Productos Filtrados"} />} />
+              <Route path="/contacto" element={<Contacto />} />
+
+              
+              <Route path="/login" element={<Login />} /> 
+              
+              {/* =================================================== */}
+              {/* RUTAS PROTEGIDAS (Usamos ProtectedRoute) */}
+              {/* =================================================== */}
+              
              
-          />} />
-          {/*  RUTA  shoppingCart */}
-          <Route path="/carrito" element={<ShoppingCart />} /> 
-            
-             {/*  RUTA  Checkout */}
-            <Route path="/checkout" element={<Checkout />} />
+              <Route 
+                  path="/carrito" 
+                  element={<ProtectedRoute element={<ShoppingCart />} />} 
+              /> 
+              
+              
+              <Route 
+                  path="/checkout" 
+                  element={<ProtectedRoute element={<Checkout />} />} 
+              />
 
-{/*  RUTA  Order confirmation */}
-            <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
+              {/* RUTA Order confirmation (Normalmente pública, ya que el carrito ya se vació) */}
+              <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
+              
+            </Routes>
             
-            {/*  RUTA  Contacto */}
-            <Route path="/contacto" element={<Contacto />} />
-        </Routes>
-        <Footer/>
-        <HomeButton /> 
-        
-       
-        
-      </div>
-      </CartProvider> 
-</BrowserRouter>
-
-    </>
+            <Footer/>
+            <HomeButton /> 
+          </div>
+        </CartProvider> 
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
-
 export default App
