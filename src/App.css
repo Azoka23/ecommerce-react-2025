@@ -72,5 +72,40 @@ body {
     z-index: 1; 
     background-color: #f7f5f3; 
 
-    /* ❌ ELIMINAMOS TODOS LOS FILTROS Y OVERLAYS que oscurecían toda la página */
+  
+}
+
+
+
+@media (max-width: 600px) {
+    
+    
+    .item-list-container {
+       
+        padding: 20px 10px; 
+        min-height: 60vh; 
+    }
+
+    
+    .item-list-container h1 {
+        font-size: 1.8em; /* De 2.5em a 1.8em para que quepa en una línea */
+        margin-bottom: 20px;
+    }
+    
+    
+    .item-list {
+        
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    
+    .loading-message {
+        font-size: 1.2em;
+    }
+    
+    .error-message {
+        font-size: 1.0em;
+        width: 90%;
+    }
 }

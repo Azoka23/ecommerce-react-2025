@@ -9,16 +9,17 @@ const ShoppingCart = () => {
     cart, 
     clearCart, 
     getTotalItems,
+    getTotalPrice, 
     removeItem,
-    updateItemQuantity // Función para modificar cantidad
+    updateItemQuantity
   } = useCartContext();
 
-  //  PRECIO TOTAL (Precio * Cantidad)
-  const totalPrice = cart.reduce((total, product) => total + (product.price * product.quantity), 0);
-
   
+  
+  // 🛑 LLAMAMOS A LA FUNCIÓN DEL CONTEXTO
+  const totalPrice = getTotalPrice(); 
 
-  // --- EL PANEL COMPLETO (AHORA ES UNA VISTA) ---
+  // el panel es una vista
   return (
     <aside className="shopping-cart view-mode"> 
       
@@ -39,7 +40,8 @@ const ShoppingCart = () => {
                 <div className="item-info">
                   {product.name} 
                   <span className="item-details">
-                    ({product.quantity} uds.) - ${product.price * product.quantity}
+                    {/* Reutilizamos la lógica de precio por ítem, o la simplificamos con toFixed(2) */}
+                    ({product.quantity} uds.) - ${ (product.price * product.quantity).toFixed(2) }
                   </span>
                 </div>
                 
@@ -47,7 +49,7 @@ const ShoppingCart = () => {
                   {/* Botón para DECREMENTAR */}
                   <button 
                     onClick={() => updateItemQuantity(product.id, product.quantity - 1)}
-                    disabled={product.quantity <= 1} // Deshabilita si ya es 1
+                    disabled={product.quantity <= 1} 
                     className="qty-button"
                   >
                     -
@@ -56,7 +58,7 @@ const ShoppingCart = () => {
                   {/* Botón para INCREMENTAR */}
                   <button 
                     onClick={() => updateItemQuantity(product.id, product.quantity + 1)}
-                    disabled={product.quantity >= product.stock} // Deshabilita si llega al stock
+                    disabled={product.quantity >= product.stock}
                     className="qty-button"
                   >
                     +
@@ -71,13 +73,13 @@ const ShoppingCart = () => {
             ))}
           </ul>
           
+          {/* 🛑 Usamos el valor calculado por la función del Contexto */}
           <h3>Total a Pagar: ${totalPrice.toFixed(2)}</h3>
 
           <div className="cart-actions"> 
             <button onClick={clearCart} className="clear-button">✖️ Vaciar Carrito</button>
 
             <Link to="/checkout" className="checkout-link"> 
-              {/* ELIMINAMOS EL ONCLICK QUE CERRABA EL PANEL */}
               <button className="checkout-button">
                 🛒 Finalizar Compra
               </button>

@@ -88,6 +88,15 @@ export function useCart() {
   const getTotalItems = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
+
+//precio total
+  const getTotalPrice = () => {
+    // Usamos exactamente la misma lógica de cálculo que tenías en ShoppingCart
+    return cart.reduce((total, item) => {
+        const price = item.price || 0;
+        return total + (price * item.quantity);
+    }, 0);
+};
   
   // OTRAS FUNCIONES
   const clearCart = () => {
@@ -108,5 +117,6 @@ export function useCart() {
     isCartVisible,
     toggleCartVisibility,
     getTotalItems,
+    getTotalPrice,
   };
 }

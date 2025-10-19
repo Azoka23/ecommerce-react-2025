@@ -21,7 +21,7 @@ import './components/ShoppingCart/ShoppingCart.css';
 import { CartProvider } from './context/CartContext'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-
+import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
 import { Categorias } from './components/Categorias/Categorias'; 
 
@@ -66,6 +66,9 @@ function App() {
             
              {/*  RUTA  Checkout */}
             <Route path="/checkout" element={<Checkout />} />
+
+{/*  RUTA  Order confirmation */}
+            <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             
             {/*  RUTA  Contacto */}
             <Route path="/contacto" element={<Contacto />} />
