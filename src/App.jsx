@@ -15,7 +15,7 @@ import { ItemListContainer } from './components/ItemListContainer/ItemListContai
 import { ItemDetailContainer } from './components/ItemDetailContainer/ItemDetailContainer'; 
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';    
 import './components/ShoppingCart/ShoppingCart.css'; 
-import { CartProvider } from './context/CartContext'; 
+import { CartProvider } from './context/CartContext.jsx'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx'; 
 import { Login } from './components/Login/Login'; 
@@ -72,6 +72,17 @@ function App() {
                   path="/checkout" 
                   element={<ProtectedRoute element={<Checkout />} />} 
               />
+
+              {/*<Route 
+    path="/carrito" 
+    element={<ShoppingCart />} // 🛑 Cambiado para depurar
+/> 
+
+
+<Route 
+    path="/checkout" 
+    element={<Checkout />} // 🛑 Cambiado para depurar
+/>*/}
 
               {/* RUTA Order confirmation (Normalmente pública, ya que el carrito ya se vació) */}
               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
