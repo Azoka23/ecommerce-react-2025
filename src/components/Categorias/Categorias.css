@@ -47,3 +47,21 @@
 .category-list li:hover {
     background-color: #eee;
 }
+
+
+
+
+.category-link-button {
+    
+    color: #8b5e3c; /* Tono cálido de café o tierra */
+    display: block; 
+    text-decoration: none; 
+    transition: transform 0.3s ease-out, color 0.3s;
+    padding: 0; 
+}
+
+.category-link-button:hover {
+    transform: scale(1.1); 
+    color: #4a2c2a;       
+}
+

@@ -1,9 +1,10 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import './Checkout.css'; 
 import { useCartContext } from '../../context/CartContext'; 
+import { useAuth } from '../../context/AuthContext'; 
 import { Link, useNavigate } from 'react-router-dom'; 
 
-// Lógica de validación
+// Lógica de validación (AJUSTADA)
 const validateForm = (data) => {
     const errors = {};
 
@@ -18,27 +19,42 @@ const validateForm = (data) => {
     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
         errors.email = 'El formato de email no es válido.';
     }
-    if (data.email !== data.confirmEmail) {
-        errors.confirmEmail = 'Los emails no coinciden.';
-    }
-
+    // 🛑 SE ELIMINÓ la verificación de 'confirmEmail'
+    
     return errors;
 };
 
 // Componente principal Checkout
 export const Checkout = () => {
-    // 🛑 Consumimos las funciones y variables necesarias del Contexto
+    
     const { cart, getTotalPrice, clearCart } = useCartContext(); 
+    const { isAuthenticated, user, updateUserProfile } = useAuth(); 
+    
     const navigate = useNavigate(); 
 
+    // 🛑 ESTADO AJUSTADO: Quitamos 'confirmEmail'
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
         email: '',
-        confirmEmail: '',
     });
 
     const [errors, setErrors] = useState({});
+
+    // 🚀 EFECTO CLAVE: Inicializa/Autocompleta el formulario
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            // Inicializa los campos con los datos del usuario guardados.
+            setFormData(prev => ({
+                ...prev,
+                // 🛑 Autocompletamos con user.name y user.phone
+                name: user.name || '',
+                phone: user.phone || '',
+                email: user.email || '',
+                // Ya no necesitamos inicializar confirmEmail
+            }));
+        }
+    }, [isAuthenticated, user]); 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -55,7 +71,21 @@ export const Checkout = () => {
         const validationErrors = validateForm(formData);
         setErrors(validationErrors);
 
+        // NOTA: Si necesitas que el email se confirme, puedes hacer una doble validación simple
+        // if (formData.email !== formData.confirmEmail) ...
+        // Pero como lo eliminamos de la UX, no lo necesitamos.
+
         if (Object.keys(validationErrors).length === 0) {
+            
+            // 🛑 PASO CLAVE: Actualizar el perfil del usuario si está logueado
+            if (isAuthenticated) {
+                // Guardamos los datos de name, phone y email en el perfil
+                updateUserProfile({
+                    name: formData.name,
+                    phone: formData.phone,
+                    email: formData.email,
+                });
+            }
             
             console.log('Generando orden con datos:', formData, 'y productos:', cart);
             
@@ -68,7 +98,6 @@ export const Checkout = () => {
         }
     };
 
-    // Usamos el carro directamente. Si falla aquí, revisa el CartContext.js
     if (!cart || cart.length === 0) { 
         return (
             <main className="checkout-page empty-cart">
@@ -79,7 +108,6 @@ export const Checkout = () => {
         );
     }
     
-    // Llamamos a la función recién asegurada del Contexto
     const totalPrice = getTotalPrice(); 
 
     return (
@@ -150,18 +178,7 @@ export const Checkout = () => {
                          {errors.email && <p className="error-message">{errors.email}</p>}
                     </div>
 
-                    {/* Campo Confirmar Email */}
-                    <div className="form-group">
-                        <label htmlFor="confirmEmail">Confirmar Email:</label>
-                        <input 
-                            type="email" 
-                            id="confirmEmail" 
-                            name="confirmEmail" 
-                            value={formData.confirmEmail} 
-                            onChange={handleInputChange} 
-                        />
-                         {errors.confirmEmail && <p className="error-message">{errors.confirmEmail}</p>}
-                    </div>
+                    {/* 🛑 SE ELIMINÓ EL CAMPO CONFIRMAR EMAIL */}
 
                     <button type="submit" className="confirm-button">
                         ✔️ Confirmar y Generar Orden

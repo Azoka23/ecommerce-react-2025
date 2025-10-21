@@ -14,7 +14,8 @@ export const ItemDetail = ({ id, name, type, price, description, stock, image })
     const handleAddToCart = () => {
         // Crear el objeto exactamente como lo espera useCart.js
         const productToAdd = { id, name, price, stock, image };
-        addToCart(productToAdd);
+        const quantityToAdd = 1;
+        addToCart(productToAdd, quantityToAdd);
     };
 
     return (

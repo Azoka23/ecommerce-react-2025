@@ -23,7 +23,7 @@ import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
 import { Categorias } from './components/Categorias/Categorias'; 
-
+import { Register } from './components/Register/Register';
 function App() {
   
   return (
@@ -83,6 +83,8 @@ function App() {
     path="/checkout" 
     element={<Checkout />} // 🛑 Cambiado para depurar
 />*/}
+
+<Route path="/register" element={<Register />} />
 
               {/* RUTA Order confirmation (Normalmente pública, ya que el carrito ya se vació) */}
               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />

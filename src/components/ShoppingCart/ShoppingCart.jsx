@@ -16,7 +16,7 @@ import { useCartContext } from '../../context/CartContext';
 
   
   
-  // 🛑 LLAMAMOS A LA FUNCIÓN DEL CONTEXTO
+  // LLAMAMOS A LA FUNCIÓN DEL CONTEXTO
   const totalPrice = getTotalPrice(); 
 
   // el panel es una vista
@@ -37,43 +37,59 @@ import { useCartContext } from '../../context/CartContext';
             {cart.map((product) => (
               <li key={product.id} className="cart-item"> 
                 
-                <div className="item-info">
-                  {product.name} 
-                  <span className="item-details">
-                    {/* Reutilizamos la lógica de precio por ítem, o la simplificamos con toFixed(2) */}
-                    ({product.quantity} uds.) - ${ (product.price * product.quantity).toFixed(2) }
-                  </span>
+                {/* 🛑 NUEVO CONTENEDOR PARA IMAGEN Y TEXTO */}
+                <div className="item-info-wrapper"> 
+                    
+                    {/* 1. Imagen en miniatura */}
+                    <img 
+                        src={`/images/${product.image}`} 
+                        alt={product.name} 
+                        className="cart-item-thumbnail" 
+                    />
+
+                    {/* 2. Información del Producto */}
+                    <div className="item-info">
+                        {product.name} 
+                        <span className="item-details">
+                            ({product.quantity} uds.) - ${ (product.price * product.quantity).toFixed(2) }
+                        </span>
+                    </div>
                 </div>
                 
+                {/* SECCIÓN DE CONTROLES (Originales con texto descriptivo) */}
                 <div className="item-controls">
-                  {/* Botón para DECREMENTAR */}
+                  
+                  {/* Botón para DECREMENTAR (QUITAR UNIDAD) */}
                   <button 
                     onClick={() => updateItemQuantity(product.id, product.quantity - 1)}
                     disabled={product.quantity <= 1} 
-                    className="qty-button"
+                    className="qty-button action-control" 
                   >
-                    -
+                    <span className="icon-symbol">-</span>
+                    <span className="control-text">Quitar</span>
                   </button>
                   
-                  {/* Botón para INCREMENTAR */}
+                  {/* Botón para INCREMENTAR (AGREGAR UNIDAD) */}
                   <button 
                     onClick={() => updateItemQuantity(product.id, product.quantity + 1)}
                     disabled={product.quantity >= product.stock}
-                    className="qty-button"
+                    className="qty-button action-control" 
                   >
-                    +
+                    <span className="icon-symbol">+</span>
+                    <span className="control-text">Agregar</span>
                   </button>
                   
                   {/* Botón para ELIMINAR COMPLETAMENTE */}
-                  <button onClick={() => removeItem(product.id)} className="remove-button">
-                    ❌
+                  <button onClick={() => removeItem(product.id)} className="remove-button action-control">
+                    <span className="icon-symbol">❌</span>
+                    <span className="control-text">Eliminar</span>
                   </button>
                 </div>
               </li>
             ))}
           </ul>
           
-          {/* 🛑 Usamos el valor calculado por la función del Contexto */}
+          
           <h3>Total a Pagar: ${totalPrice.toFixed(2)}</h3>
 
           <div className="cart-actions"> 
