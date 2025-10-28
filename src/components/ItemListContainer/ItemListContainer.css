@@ -3,9 +3,12 @@
 .item-list-container {
     
     background-color: #f7f5f3; 
-    padding: 40px 20px;
+    padding: 40px 40px;
     text-align: center;
-    min-height: 80vh; 
+    min-height: 100vh; 
+    padding-bottom: 80px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .item-list-container h1 {
@@ -53,4 +56,8 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     justify-content: center; 
     width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px  0;
+    box-sizing: border-box;
 }

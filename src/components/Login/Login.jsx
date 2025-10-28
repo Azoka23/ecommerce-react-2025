@@ -1,12 +1,11 @@
+// src/components/Login/Login.jsx - Versión Estable
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext'; 
-// 🛑 Importamos 'Link' para el enlace de registro
 import { useNavigate, Link } from 'react-router-dom'; 
 import './Login.css'; 
 
 export const Login = () => {
     
-    // Optimización: Un solo estado para manejar ambos campos del formulario
     const [credentials, setCredentials] = useState({ 
         username: '', 
         password: '' 
@@ -16,7 +15,6 @@ export const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    // Handler de cambio genérico para actualizar el estado
     const handleChange = (e) => {
         const { id, value } = e.target;
         setCredentials(prev => ({ 
@@ -32,10 +30,8 @@ export const Login = () => {
         const success = login(credentials.username, credentials.password);
 
         if (success) {
-            // Login exitoso: Redirige a la página principal
             navigate('/');
         } else {
-            // Login fallido: Muestra error y limpia solo la contraseña
             setError('Credenciales incorrectas. Intenta con "admin" y "1234".');
             setCredentials(prev => ({ 
                 ...prev, 
@@ -48,7 +44,6 @@ export const Login = () => {
         <main className="login-page">
             <div className="login-container">
                 
-                {/* ✅ MEJORA UX: Mensaje amigable */}
                 <h2>👋 Regístrate para iniciar tu compra</h2>
                 <p>Usa **admin** y **1234** para ingresar.</p>
                 
@@ -84,16 +79,14 @@ export const Login = () => {
 
                     <div className="login-footer-links">
                         
-                        {/* 🚀 NUEVO ENLACE: REGISTRARSE */}
                         <p>¿Sos nuevo? 
-    <Link to="/register" className="register-link"> {/* 🛑 Cambiamos a /register */}
-        Regístrate aquí
-    </Link>
-</p>
+                            <Link to="/register" className="register-link"> 
+                                Regístrate aquí
+                            </Link>
+                        </p>
 
-                        {/* Opción para seguir navegando */}
                         <button 
-                            type="button" // CRÍTICO: Para evitar enviar el formulario
+                            type="button"
                             className="later-button" 
                             onClick={() => navigate('/')}
                         >
