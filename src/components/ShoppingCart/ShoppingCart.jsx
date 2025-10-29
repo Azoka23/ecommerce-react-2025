@@ -51,7 +51,7 @@ import { useCartContext } from '../../context/CartContext';
                     <div className="item-info">
                         {product.name} 
                         <span className="item-details">
-                            ({product.quantity} uds.) - ${ (product.price * product.quantity).toFixed(2) }
+                            ({product.quantity} u.) - ${ (product.price * product.quantity).toFixed(2) }
                         </span>
                     </div>
                 </div>

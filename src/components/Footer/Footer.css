@@ -26,3 +26,38 @@ footer p {
     color: #c0b2a5; 
     font-weight: bold; 
 }
+
+/* --- REGLAS DE LA SECCIÓN LEGAL (footer-legal) --- */
+
+/* 1. Eliminar los puntos de la lista */
+.footer-legal ul {
+    list-style: none; /* Esta es la clave para eliminar las viñetas */
+    padding: 0;      /* Ya estaba en tu código general, pero lo confirmamos */
+    margin: 0;
+}
+
+/* 2. Reducir el tamaño de la letra de los enlaces legales */
+.footer-legal li a {
+    /* Hacemos el texto más pequeño que el resto del footer */
+    font-size: 0.8em; 
+    opacity: 0.6; /* Le damos una opacidad para que se vea más sutil */
+}
+
+/* 3. Estilos del título (si quieres que se vea más sutil que el título de la marca) */
+.footer-legal h3 {
+    font-size: 1em; /* Un poco más chico que el 1.1em de la marca */
+    opacity: 0.7; /* Más sutil */
+    margin-bottom: 12px;
+}
+
+/* Opcional: Pequeño efecto hover para resaltar el enlace al pasar el ratón */
+.footer-legal li a:hover {
+    opacity: 1; /* Se ilumina al 100% */
+    text-decoration: underline;
+}
+
+/* Si tienes estilos generales como estos, mantenlos o ajústalos: */
+.main-footer ul {
+    list-style: none; /* Si ya tienes esto, la primera regla es redundante, pero no daña. */
+    padding: 0;
+}

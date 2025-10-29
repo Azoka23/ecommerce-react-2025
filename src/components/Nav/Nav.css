@@ -1,13 +1,12 @@
-/* src/components/Nav/Nav.css (ORIGINAL) */
-
 /* src/components/Nav/Nav.css */
 
+/* === ESTILOS BASE DEL NAV === */
 nav {
     padding: 0;
     margin: 0;
+    /* Ajustado: Puede ser block si el nav debe ocupar todo el ancho, pero mantenemos inline-block según tu código */
     display: inline-block; 
 }
-
 
 nav ul {
     list-style: none;
@@ -19,13 +18,13 @@ nav ul {
 }
 
 nav li {
+    /* Mantener inline-block para el flujo horizontal */
     display: inline-block;
 }
 
 nav a {
-    
     text-decoration: none; 
-    color: #FAF9F6; 
+    color: #FAF9F6; /* Color claro para el texto principal */
     font-weight: 700;
     font-size: 1.2em; 
     padding: 5px 0;
@@ -33,21 +32,88 @@ nav a {
 }
 
 nav a:hover {
-    
     color: #000000; 
-    border-bottom: 2px solid #5a4038; 
+    border-bottom: 2px solid #5a4038; /* Resaltado al hacer hover */
 }
 
+/* === ESTILOS DEL ICONO DEL CARRITO === */
 .cart-nav-image-icon {
-    
+    /* El color no afecta la imagen, pero mantenemos la propiedad por si hay un fallback */
     color: #FAF9F6; 
     width: 28px; 
     height: 28px; 
-    
     transition: transform 0.3s ease-in-out; 
     vertical-align: middle; 
 }
 .cart-nav-image-icon:hover {
+    /* El color no afecta la imagen */
     color: #000000; 
-    transform: scale(1.50); 
+    transform: scale(1.2); /* Reducí un poco el scale de 1.50 para que no sea tan brusco */
+}
+
+
+/* === ESTILOS DEL DROPDOWN DE CATEGORÍAS (Menú Desplegable) === */
+
+/* 1. Contenedor principal del menú desplegable */
+.nav-dropdown {
+    position: relative; 
+    display: inline-block; 
+}
+
+/* 2. El submenú que está oculto (la lista ul) */
+.dropdown-content {
+    /* CLAVE: Oculto por defecto */
+    display: none; 
+    
+    /* Posicionamiento y capa */
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    z-index: 100; 
+    
+    /* Estilos de la caja */
+    background-color: #5a4038; /* Fondo marrón oscuro */
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.5);
+    min-width: 180px; 
+    
+    /* Resetear estilos de lista */
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+    
+    /* Asegurar que el contenido fluya verticalmente */
+    flex-direction: column;
+}
+
+/* 3. Ítems del submenú */
+.dropdown-content li {
+    display: block;
+    margin: 0;
+}
+
+/* 4. Estilos de los enlaces dentro del submenú */
+.dropdown-content li a {
+    display: block;
+    padding: 10px 15px; 
+    font-size: 1em; /* Más pequeño que el nav principal */
+    font-weight: 500;
+    
+    /* Asegurar que el color de texto sea visible en el fondo oscuro */
+    color: #FAF9F6; 
+    
+    /* Desactivar la línea inferior del nav principal para los ítems del submenú */
+    border-bottom: none; 
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover en los enlaces del submenú */
+.dropdown-content li a:hover {
+    background-color: #7e635a; /* Tono más claro al hacer hover */
+    color: #FFFFFF;
+}
+
+/* 5. REGLA CLAVE PARA REACT (MUESTRA CON CLASE) */
+/* Muestra el .dropdown-content cuando el li padre tiene la clase .show-dropdown */
+.nav-dropdown.show-dropdown .dropdown-content {
+    display: block;
 }

@@ -22,7 +22,7 @@ import { Login } from './components/Login/Login';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
-import { Categorias } from './components/Categorias/Categorias'; 
+
 import { Register } from './components/Register/Register';
 function App() {
   
@@ -50,8 +50,11 @@ function App() {
                 element={<ItemDetailContainer titulo={"Bienvenidos a la tienda de Cafe"} />}
               />
 
-              <Route path="/categorias" element={<Categorias />} />
-              <Route path="/categorias/:categoriaId" element={<ItemListContainer titulo={"Productos Filtrados"} />} />
+              <Route path="/categoria/:categoriaId" element={
+                    <ItemListContainer titulo="Productos Filtrados" />
+                } />
+
+              
               <Route path="/contacto" element={<Contacto />} />
 
               
