@@ -32,7 +32,7 @@ export const Login = () => {
         if (success) {
             navigate('/');
         } else {
-            setError('Credenciales incorrectas. Intenta con "admin" y "1234".');
+            setError('Credenciales incorrectas. Intenta con "usuario" y "1234".');
             setCredentials(prev => ({ 
                 ...prev, 
                 password: '' 
@@ -45,7 +45,7 @@ export const Login = () => {
             <div className="login-container">
                 
                 <h2>👋 Regístrate para iniciar tu compra</h2>
-                <p>Usa **admin** y **1234** para ingresar.</p>
+                <p>Usa **usuario** y **1234** para ingresar.</p>
                 
                 <form onSubmit={handleSubmit} className="login-form">
                     

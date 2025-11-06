@@ -22,8 +22,12 @@ import { Login } from './components/Login/Login';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
-
+import { ProductFormContainer } from './adminComponents/ProductFormContainer/ProductFormContainer';
 import { Register } from './components/Register/Register';
+
+
+
+
 function App() {
   
   return (
@@ -38,6 +42,16 @@ function App() {
             <Routes>
               {/* =================================================== */}
               {/* RUTAS PÚBLICAS */}
+              {/* =================================================== */}
+              
+              
+              {/* =================================================== */}
+              {/* RUTA DE PRUEBA TEMPORAL DEL CRUD - SÓLO PARA TESTEO */}
+              {/* =================================================== */}
+              <Route 
+                path="/test-form"  // <- Navega a esta ruta en tu navegador
+                element={<ProductFormContainer />} 
+              />
               {/* =================================================== */}
               
               <Route 
@@ -92,6 +106,9 @@ function App() {
               {/* RUTA Order confirmation (Normalmente pública, ya que el carrito ya se vació) */}
               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
               
+
+
+
             </Routes>
             
             <Footer/>

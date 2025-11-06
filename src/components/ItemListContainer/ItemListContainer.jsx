@@ -1,54 +1,41 @@
 // src/components/ItemListContainer/ItemListContainer.jsx (CORREGIDO)
 
+// src/components/ItemListContainer/ItemListContainer.jsx - ¡VERSIÓN FINAL CON SERVICIO MOCKAPI!
+
 import React, { useState, useEffect } from 'react';
 import { ItemList } from '../ItemList/ItemList';
-import { useParams } from 'react-router-dom'; // 👈 1. NECESARIO: Importar useParams
+import { useParams } from 'react-router-dom';
+import { getProducts } from '../../services/Products'; // 🛑 CLAVE: Importar la función getProducts
 import './ItemListContainer.css'; 
 
 export const ItemListContainer = ({ titulo }) => {
     
-    // Leer el parámetro de la URL
     const { categoriaId } = useParams(); 
-    
     const [listProducts, setListProducts] = useState([]); 
+    const [isLoading, setIsLoading] = useState(true); // Manejo de carga
+    const [error, setError] = useState(null);       // Manejo de errores
     
     
     useEffect(() => {
+        setIsLoading(true); 
+        setError(null);    
         
-        
-        fetch("/data/productos.json") 
-            .then(res => {
-                
-                if (!res.ok) {
-                    throw new Error("Hubo un problema al buscar productos: " + res.status);
-                }
-                
-                return res.json();
-            })
+        // 🛑 Lógica limpia: Llamamos al servicio con el filtro
+        getProducts(categoriaId) // Le pasamos directamente el categoryId (puede ser null)
             .then(data => {
-                
-                let productosFiltrados = data;
-                
-                
-                if (categoriaId) {
-                    
-                    productosFiltrados = data.filter(
-                        (product) => product.type === categoriaId
-                    );
-                }
-                
-                setListProducts(productosFiltrados);
+                setListProducts(data);
             })
             .catch(err => {
-                
-                console.error("Error en la carga de productos:", err);
-            
+                // Captura y muestra el error de red o del API
+                console.error("Error al cargar productos en el componente:", err);
+                setError("No se pudieron cargar los productos. Intenta más tarde.");
+            })
+            .finally(() => {
+                setIsLoading(false); // Finalizar la carga
             });
             
-    //  La dependencia debe incluir categoriaId. 
-    // Esto hace que el efecto se ejecute cada vez que el filtro cambia en la URL.
+    // Se ejecuta cada vez que el filtro de la URL cambia (Home o /categoria/X)
     }, [categoriaId]); 
-
 
 
     const displayTitle = categoriaId 
@@ -59,15 +46,20 @@ export const ItemListContainer = ({ titulo }) => {
         <section className="item-list-container">
             <h1>{displayTitle}</h1>
             
+            {isLoading && <p>Cargando productos...</p>}
+            
+            {error && <p className="error-message">⚠️ Error: {error}</p>}
            
-            {listProducts.length > 0 ? (
+            {/* Mostrar lista solo si no está cargando y no hay error */}
+            {!isLoading && !error && listProducts.length > 0 && (
                 <ItemList 
                     lista={listProducts} 
-                
                 />
-            ) : (
-                
-                <p>Cargando productos o no hay productos en esta categoría...</p>
+            )}
+            
+            {/* Mensaje cuando no hay productos */}
+            {!isLoading && !error && listProducts.length === 0 && (
+                <p>No hay productos disponibles en esta categoría.</p>
             )}
         </section>
     );

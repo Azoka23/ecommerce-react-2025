@@ -19,12 +19,12 @@ const getRegisteredUsers = () => {
     const users = localStorage.getItem(USERS_KEY);
     return users ? JSON.parse(users) : { 
         // Usuario por defecto (completo)
-        'admin': { 
+        'usuario': { 
             password: '1234', 
-            username: 'admin', 
-            name: 'Administrador Demo', // Datos extra para simular autocompletado
+            username: 'usuario', 
+            name: 'Usuario Demo', // Datos extra para simular autocompletado
             phone: '555-1234',
-            email: 'admin@demo.com' 
+            email: 'usuario@demo.com' 
         } 
     };
 };

@@ -19,6 +19,8 @@ export const Item=({ id, name, type, price, stock, image, children }) => {
     
     return(
         <article className="product-card"> 
+
+        
             
             <h2>{name} </h2>
             <p className="item-type">Tipo: {type}</p>

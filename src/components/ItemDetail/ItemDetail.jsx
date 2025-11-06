@@ -24,7 +24,7 @@ export const ItemDetail = ({ id, name, type, price, description, stock, image })
             <div className="detail-image-container">
                 
                 <img 
-                    src={`/images/${image}`} 
+                    src={image} 
                     alt={name} 
                     className="detail-image"
                 />
