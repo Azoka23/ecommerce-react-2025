@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom'; 
 import './Login.css'; 
 
+// 🛑 Exportación Nombrada: "export const" para coincidir con "import { Login }"
 export const Login = () => {
     
     const [credentials, setCredentials] = useState({ 
@@ -12,7 +13,8 @@ export const Login = () => {
     });
     const [error, setError] = useState('');
     
-    const { login } = useAuth();
+    // Obtenemos la función login del contexto
+    const { login } = useAuth(); 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -27,12 +29,23 @@ export const Login = () => {
         e.preventDefault();
         setError('');
 
-        const success = login(credentials.username, credentials.password);
+        // CLAVE: login ahora devuelve el rol ('dueño', 'cliente') o null
+        const role = login(credentials.username, credentials.password);
 
-        if (success) {
-            navigate('/');
+        if (role) {
+            
+            // Redirección condicional basada en el rol
+            if (role === 'administrador') {
+                // Redirigir al Panel de Administración
+                navigate('/admin');
+            } else {
+                // Redirigir a la tienda para clientes normales
+                navigate('/');
+            }
+            
         } else {
-            setError('Credenciales incorrectas. Intenta con "usuario" y "1234".');
+            // Mensaje de error
+            setError('Credenciales incorrectas. Intenta con "usuario" (1234) o "dueño" (12345).');
             setCredentials(prev => ({ 
                 ...prev, 
                 password: '' 
@@ -44,8 +57,8 @@ export const Login = () => {
         <main className="login-page">
             <div className="login-container">
                 
-                <h2>👋 Regístrate para iniciar tu compra</h2>
-                <p>Usa **usuario** y **1234** para ingresar.</p>
+                <h2>👋 Accede a tu cuenta</h2>
+                <p>Usuarios de prueba: **usuario/1234** (Cliente) o **administrador/12345** (Admin).</p>
                 
                 <form onSubmit={handleSubmit} className="login-form">
                     

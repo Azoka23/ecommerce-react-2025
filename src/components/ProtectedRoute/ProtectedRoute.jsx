@@ -2,19 +2,28 @@
 
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Consumimos el estado de autenticación
+import { useAuth } from '../../context/AuthContext'; 
 
-// Este componente recibe la página que queremos proteger como prop 'element'
-export const ProtectedRoute = ({ element }) => {
-    // Obtenemos el estado de autenticación del contexto
-    const { isAuthenticated } = useAuth();
+// Este componente ahora recibe el 'requiredRole' (ej: "dueño")
+export const ProtectedRoute = ({ element, requiredRole }) => {
+    
+    // Obtenemos el estado de autenticación y el objeto completo del usuario
+    const { isAuthenticated, user } = useAuth(); 
 
+    // 1. Verificación de Autenticación
     if (!isAuthenticated) {
         // Si NO está autenticado, lo redirigimos a la página de login.
-        // El 'replace' asegura que no pueda volver atrás con el botón del navegador.
         return <Navigate to="/login" replace />; 
     }
 
-    // Si SÍ está autenticado, renderizamos el componente solicitado (ej: ShoppingCart)
+    // 2. Verificación de Rol (CLAVE para el Admin Dashboard)
+    // Se ejecuta si 'requiredRole' está definido (como en la ruta /admin)
+    if (requiredRole && (!user || user.role !== requiredRole)) {
+        console.warn(`Acceso denegado a ruta protegida: Se requiere el rol ${requiredRole}.`);
+        // Si el usuario no tiene el rol, lo redirigimos a la página principal
+        return <Navigate to="/" replace />;
+    }
+
+    // 3. Si pasa todas las verificaciones, renderizamos el componente solicitado
     return element;
 };

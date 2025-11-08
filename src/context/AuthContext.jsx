@@ -17,16 +17,27 @@ const USERS_KEY = 'registeredUsers';
 // Inicializa o obtiene los usuarios registrados. 
 const getRegisteredUsers = () => {
     const users = localStorage.getItem(USERS_KEY);
-    return users ? JSON.parse(users) : { 
-        // Usuario por defecto (completo)
+    
+    // 🛑 Modificación: Añadir usuario dueño y el rol 'cliente' al usuario por defecto
+    const defaultUsers = { 
         'usuario': { 
             password: '1234', 
             username: 'usuario', 
-            name: 'Usuario Demo', // Datos extra para simular autocompletado
+            name: 'Usuario Demo', 
             phone: '555-1234',
-            email: 'usuario@demo.com' 
-        } 
+            email: 'usuario@demo.com',
+            role: 'cliente' // 🛑 Rol para usuario normal
+        },
+        'administrador': { // 🛑 NUEVO USUARIO ADMINISTRADOR
+            password: '12345', 
+            username: 'dueño',
+            name: 'Administrador',
+            email: 'admin@tucafe.com',
+            role: 'administrador' // 🛑 Rol para acceder al Dashboard
+        }
     };
+    
+    return users ? JSON.parse(users) : defaultUsers;
 };
 
 const saveRegisteredUsers = (users) => {
@@ -56,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, []); 
 
-    // 4. Función de LOGIN (Ajustada para cargar el objeto completo)
+    // 4. Función de LOGIN (Ajustada para devolver el ROL)
     const login = (username, password) => {
         const users = getRegisteredUsers();
         const userInDB = users[username];
@@ -66,19 +77,21 @@ export const AuthProvider = ({ children }) => {
             
             // Guardar token y el OBJETO COMPLETO del usuario
             localStorage.setItem(TOKEN_KEY, simulatedToken);
-            localStorage.setItem('user', JSON.stringify(userInDB)); // <-- Guardamos el objeto completo
+            localStorage.setItem('user', JSON.stringify(userInDB)); 
             
             setIsAuthenticated(true);
-            setUser(userInDB); // Establecer el objeto completo
+            setUser(userInDB); 
             
             console.log('Login exitoso. Sesión iniciada para:', username);
-            return true;
+            
+            // 🛑 RETORNO CLAVE: Devolver el rol del usuario para la redirección
+            return userInDB.role || 'cliente'; 
         } else {
-            return false;
+            return null; // 🛑 Devolver null si falla la autenticación
         }
     };
     
-    // 5. Función de REGISTER (Ajustada para guardar el objeto completo)
+    // 5. Función de REGISTER (Ajustada)
     const register = (username, password, email) => {
         const users = getRegisteredUsers();
         if (users.hasOwnProperty(username)) {
@@ -89,16 +102,17 @@ export const AuthProvider = ({ children }) => {
             password: password, 
             username: username,
             email: email,
-            // 🛑 Estos campos se llenarán en el Checkout
             name: '', 
             phone: '',
-            address: ''
+            address: '',
+            role: 'cliente' // 🛑 Asignar rol por defecto al registrar
         };
 
         users[username] = newUser;
         saveRegisteredUsers(users);
 
-        return login(username, password);
+        // Llamar a login, que ahora devuelve el rol
+        return login(username, password); 
     };
 
     // 🚀 NUEVA FUNCIÓN: Actualizar datos de perfil (usada en Checkout)
@@ -118,7 +132,7 @@ export const AuthProvider = ({ children }) => {
 
         // 2. Actualiza el estado global (Contexto)
         setUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser)); // Actualiza el usuario logueado en LS
+        localStorage.setItem('user', JSON.stringify(updatedUser)); 
         
         return true;
     }
@@ -132,13 +146,14 @@ export const AuthProvider = ({ children }) => {
         console.log('Sesión cerrada.');
     };
 
+    // 7. El valor del contexto
     const value = {
         isAuthenticated,
         user,
         login,
         logout,
         register,
-        updateUserProfile, // 🛑 EXPORTAMOS LA NUEVA FUNCIÓN
+        updateUserProfile,
     };
 
     return (

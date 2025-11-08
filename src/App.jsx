@@ -18,13 +18,13 @@ import './components/ShoppingCart/ShoppingCart.css';
 import { CartProvider } from './context/CartContext.jsx'; 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx'; 
-import { Login } from './components/Login/Login'; 
+import { Login} from './components/Login/Login.jsx'; 
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
 import { Contacto } from './components/Contacto/Contacto'; 
 import { ProductFormContainer } from './adminComponents/ProductFormContainer/ProductFormContainer';
 import { Register } from './components/Register/Register';
-
+import { AdminDashboard } from './adminComponents/AdminDashboard/AdminDashboard';
 
 
 
@@ -78,7 +78,12 @@ function App() {
               {/* RUTAS PROTEGIDAS (Usamos ProtectedRoute) */}
               {/* =================================================== */}
               
-             
+             <Route 
+    path="/admin" 
+    element={<ProtectedRoute element={<AdminDashboard />} requiredRole="administrador" />} 
+/>
+
+
               <Route 
                   path="/carrito" 
                   element={<ProtectedRoute element={<ShoppingCart />} />} 
