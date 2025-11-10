@@ -1,127 +1,69 @@
 // src/App.jsx
-
-
-
-import { useState } from 'react' // 👈 Dejamos useState por si lo usa el componente Header/Nav
 import './App.css'
 import './components/Item/Item.css'; 
 import './components/ItemList/ItemList.css'; 
 import './components/ItemListContainer/ItemListContainer.css'; 
-import { Checkout } from './components/Checkout/Checkout';
-import { HomeButton } from './components/HomeButton/HomeButton';
-import { Footer } from "./components/Footer/Footer";
-import { Header } from "./components/Header/Header";
+import './components/ShoppingCart/ShoppingCart.css'; 
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { CartProvider } from './context/CartContext.jsx'; 
+import { AuthProvider } from './context/AuthContext.jsx'; 
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
+
 import { ItemListContainer } from './components/ItemListContainer/ItemListContainer';
 import { ItemDetailContainer } from './components/ItemDetailContainer/ItemDetailContainer'; 
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';    
-import './components/ShoppingCart/ShoppingCart.css'; 
-import { CartProvider } from './context/CartContext.jsx'; 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext.jsx'; 
-import { Login} from './components/Login/Login.jsx'; 
-import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'; 
+import { Checkout } from './components/Checkout/Checkout';
 import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmation';
-import { Contacto } from './components/Contacto/Contacto'; 
-import { ProductFormContainer } from './adminComponents/ProductFormContainer/ProductFormContainer';
+import { Contacto } from './components/Contacto/Contacto';
+import { Login } from './components/Login/Login.jsx'; 
 import { Register } from './components/Register/Register';
+
 import { AdminDashboard } from './adminComponents/AdminDashboard/AdminDashboard';
-
-
+import {ShopLayout}  from "./adminComponents/AdminLayout/ShopLayout";
+       // ✅ Importar
+import { AdminLayout } from "./adminComponents/AdminLayout/AdminLayout";
+    // ✅ Importar
 
 function App() {
-  
   return (
     <BrowserRouter>
-      
       <AuthProvider>
-        <CartProvider> 
-          <div className="app-main-layout"> 
-            
-            <Header/>
-            
-            <Routes>
-              {/* =================================================== */}
-              {/* RUTAS PÚBLICAS */}
-              {/* =================================================== */}
-              
-              
-              {/* =================================================== */}
-              {/* RUTA DE PRUEBA TEMPORAL DEL CRUD - SÓLO PARA TESTEO */}
-              {/* =================================================== */}
-              <Route 
-                path="/test-form"  // <- Navega a esta ruta en tu navegador
-                element={<ProductFormContainer />} 
-              />
-              {/* =================================================== */}
-              
-              <Route 
-                path="/" 
-                element={<ItemListContainer titulo={"Bienvenidos a la tienda de Cafe"} />}
-              />
-              
-              <Route 
-                path="/detail/:id"  
-                element={<ItemDetailContainer titulo={"Bienvenidos a la tienda de Cafe"} />}
-              />
+        <CartProvider>
 
-              <Route path="/categoria/:categoriaId" element={
-                    <ItemListContainer titulo="Productos Filtrados" />
-                } />
+          <Routes>
 
-              
+            {/* 🟤 LAYOUT TIENDA (Header + Footer + HomeButton) */}
+            <Route element={<ShopLayout />}>
+              <Route path="/" element={<ItemListContainer titulo="Bienvenidos a la tienda de Cafe" />} />
+              <Route path="/detail/:id" element={<ItemDetailContainer />} />
+              <Route path="/categoria/:categoriaId" element={<ItemListContainer />} />
               <Route path="/contacto" element={<Contacto />} />
-
-              
-              <Route path="/login" element={<Login />} /> 
-              
-              {/* =================================================== */}
-              {/* RUTAS PROTEGIDAS (Usamos ProtectedRoute) */}
-              {/* =================================================== */}
-              
-             <Route 
-    path="/admin" 
-    element={<ProtectedRoute element={<AdminDashboard />} requiredRole="administrador" />} 
-/>
-
-
-              <Route 
-                  path="/carrito" 
-                  element={<ProtectedRoute element={<ShoppingCart />} />} 
-              /> 
-              
-              
-              <Route 
-                  path="/checkout" 
-                  element={<ProtectedRoute element={<Checkout />} />} 
-              />
-
-              {/*<Route 
-    path="/carrito" 
-    element={<ShoppingCart />} // 🛑 Cambiado para depurar
-/> 
-
-
-<Route 
-    path="/checkout" 
-    element={<Checkout />} // 🛑 Cambiado para depurar
-/>*/}
-
-<Route path="/register" element={<Register />} />
-
-              {/* RUTA Order confirmation (Normalmente pública, ya que el carrito ya se vació) */}
+              <Route path="/carrito" element={<ProtectedRoute element={<ShoppingCart />} />} />
+              <Route path="/checkout" element={<ProtectedRoute element={<Checkout />} />} />
               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
-              
+            </Route>
 
+            {/* 🔐 LAYOUT ADMIN (Sidebar, SIN Header/Footer) */}
+            <Route
+              path="/admin"
+              element={<ProtectedRoute element={<AdminLayout />} requiredRole="administrador" />}
+            >
+              <Route index element={<AdminDashboard />} />
+            </Route>
 
+            {/* RUTAS SIN LAYOUT (login y register no llevan header ni sidebar) */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-            </Routes>
-            
-            <Footer/>
-            <HomeButton /> 
-          </div>
-        </CartProvider> 
+          </Routes>
+
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   );
 }
-export default App
+
+export default App;
+

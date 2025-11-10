@@ -42,7 +42,8 @@ import { useCartContext } from '../../context/CartContext';
                     
                     {/* 1. Imagen en miniatura */}
                     <img 
-                        src={`/images/${product.image}`} 
+                        
+                        src={product.image} 
                         alt={product.name} 
                         className="cart-item-thumbnail" 
                     />
