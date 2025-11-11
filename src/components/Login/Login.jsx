@@ -58,7 +58,7 @@ export const Login = () => {
             <div className="login-container">
                 
                 <h2>👋 Accede a tu cuenta</h2>
-                <p>Usuarios de prueba: **usuario/1234** (Cliente) o **administrador/12345** (Admin).</p>
+                <p>Usuario de prueba: **usuario/1234** (Cliente) o **administrador/12345** (Admin) tambien podes crear tu propio usuario y contraseña., no te lo pierdas!!</p>
                 
                 <form onSubmit={handleSubmit} className="login-form">
                     

@@ -86,6 +86,31 @@
     line-height: 1.6;
 }
 
+
+/* en AdminDashboard.css (o junto con .dashboard-card) */
+.admin-action-btn {
+  display: inline-block;
+  background: #6F4E37; /* café oscuro */
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.admin-action-secondary {
+  background: #b79075; /* acento más claro */
+  color: #4b3832;
+}
+
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .admin-layout-container {

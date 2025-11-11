@@ -19,12 +19,12 @@ import { OrderConfirmation } from './components/OrderConfirmation/OrderConfirmat
 import { Contacto } from './components/Contacto/Contacto';
 import { Login } from './components/Login/Login.jsx'; 
 import { Register } from './components/Register/Register';
-
 import { AdminDashboard } from './adminComponents/AdminDashboard/AdminDashboard';
 import {ShopLayout}  from "./adminComponents/AdminLayout/ShopLayout";
-       // ✅ Importar
 import { AdminLayout } from "./adminComponents/AdminLayout/AdminLayout";
-    // ✅ Importar
+import { ProductFormContainer } from "./adminComponents/ProductFormContainer/ProductFormContainer";
+ import { ProductList } from "./adminComponents/ProductList/ProductList";
+
 
 function App() {
   return (
@@ -45,12 +45,18 @@ function App() {
               <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             </Route>
 
-            {/* 🔐 LAYOUT ADMIN (Sidebar, SIN Header/Footer) */}
+            {/* 🔐 LAYOUT ADMIN (SIN Header/Footer) */}
             <Route
               path="/admin"
               element={<ProtectedRoute element={<AdminLayout />} requiredRole="administrador" />}
             >
               <Route index element={<AdminDashboard />} />
+            
+
+<Route path="productos/crear" element={<ProductFormContainer />} />
+<Route path="productos/editar/:id" element={<ProductFormContainer />} />
+<Route path="productos/lista" element={<ProductList />} />
+
             </Route>
 
             {/* RUTAS SIN LAYOUT (login y register no llevan header ni sidebar) */}
