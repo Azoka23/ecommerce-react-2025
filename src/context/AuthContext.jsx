@@ -1,163 +1,51 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// 1. Crear el Contexto
 export const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
-// 2. Hook personalizado para consumir el contexto
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
+const TOKEN_KEY = 'adminAuthToken';
+const USER_KEY = 'adminUser';
 
-// Claves para localStorage
-const TOKEN_KEY = 'authToken';
-const USERS_KEY = 'registeredUsers';
-
-// --- FUNCIONES AUXILIARES PARA MANEJO DE "BASE DE DATOS" (localStorage) ---
-
-// Inicializa o obtiene los usuarios registrados. 
-const getRegisteredUsers = () => {
-    const users = localStorage.getItem(USERS_KEY);
-    
-    // 🛑 Modificación: Añadir usuario dueño y el rol 'cliente' al usuario por defecto
-    const defaultUsers = { 
-        'usuario': { 
-            password: '1234', 
-            username: 'usuario', 
-            name: 'Usuario Demo', 
-            phone: '555-1234',
-            email: 'usuario@demo.com',
-            role: 'cliente' // 🛑 Rol para usuario normal
-        },
-        'administrador': { // 🛑 NUEVO USUARIO ADMINISTRADOR
-            password: '12345', 
-            username: 'dueño',
-            name: 'Administrador',
-            email: 'admin@tucafe.com',
-            role: 'administrador' // 🛑 Rol para acceder al Dashboard
-        }
-    };
-    
-    return users ? JSON.parse(users) : defaultUsers;
-};
-
-const saveRegisteredUsers = (users) => {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-};
-
-// 3. El Provider que manejará el estado de la sesión
 export const AuthProvider = ({ children }) => {
-    
-    // Estado de autenticación
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // Estado para guardar la información COMPLETA del usuario
     const [user, setUser] = useState(null);
 
-    // Efecto para revisar el localStorage al cargar la aplicación
     useEffect(() => {
-        const storedToken = localStorage.getItem(TOKEN_KEY);
-        // Intentamos cargar el usuario completo
-        const storedUser = JSON.parse(localStorage.getItem('user')); 
-        
-        if (storedToken && storedUser) {
-            setIsAuthenticated(true);
-            setUser(storedUser); 
-        } else {
-             localStorage.removeItem(TOKEN_KEY);
-             localStorage.removeItem('user');
-        }
-    }, []); 
+        const token = localStorage.getItem(TOKEN_KEY);
+        const storedUser = JSON.parse(localStorage.getItem(USER_KEY));
 
-    // 4. Función de LOGIN (Ajustada para devolver el ROL)
+        if (token && storedUser) {
+            setIsAuthenticated(true);
+            setUser(storedUser);
+        } else {
+            logout();
+        }
+    }, []);
+
     const login = (username, password) => {
-        const users = getRegisteredUsers();
-        const userInDB = users[username];
+        // ✅ Único usuario permitido:
+        if (username === 'admin' && password === '1234') {
+            const adminUser = { username: 'admin', role: 'administrador' };
 
-        if (userInDB && userInDB.password === password) {
-            const simulatedToken = 'fake-auth-token-' + new Date().getTime();
-            
-            // Guardar token y el OBJETO COMPLETO del usuario
-            localStorage.setItem(TOKEN_KEY, simulatedToken);
-            localStorage.setItem('user', JSON.stringify(userInDB)); 
-            
+            localStorage.setItem(TOKEN_KEY, 'admin-session-token');
+            localStorage.setItem(USER_KEY, JSON.stringify(adminUser));
+
             setIsAuthenticated(true);
-            setUser(userInDB); 
-            
-            console.log('Login exitoso. Sesión iniciada para:', username);
-            
-            // 🛑 RETORNO CLAVE: Devolver el rol del usuario para la redirección
-            return userInDB.role || 'cliente'; 
-        } else {
-            return null; // 🛑 Devolver null si falla la autenticación
+            setUser(adminUser);
+            return true;
         }
-    };
-    
-    // 5. Función de REGISTER (Ajustada)
-    const register = (username, password, email) => {
-        const users = getRegisteredUsers();
-        if (users.hasOwnProperty(username)) {
-            return false;
-        }
-        
-        const newUser = { 
-            password: password, 
-            username: username,
-            email: email,
-            name: '', 
-            phone: '',
-            address: '',
-            role: 'cliente' // 🛑 Asignar rol por defecto al registrar
-        };
-
-        users[username] = newUser;
-        saveRegisteredUsers(users);
-
-        // Llamar a login, que ahora devuelve el rol
-        return login(username, password); 
+        return false;
     };
 
-    // 🚀 NUEVA FUNCIÓN: Actualizar datos de perfil (usada en Checkout)
-    const updateUserProfile = (data) => {
-        const users = getRegisteredUsers();
-        
-        if (!user || !users[user.username]) {
-             console.error("No hay usuario logueado para actualizar el perfil.");
-             return false;
-        }
-        
-        const updatedUser = { ...user, ...data };
-        
-        // 1. Actualiza la "DB" (localStorage de usuarios)
-        users[user.username] = updatedUser;
-        saveRegisteredUsers(users);
-
-        // 2. Actualiza el estado global (Contexto)
-        setUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser)); 
-        
-        return true;
-    }
-
-    // 6. Función de Logout
     const logout = () => {
         localStorage.removeItem(TOKEN_KEY);
-        localStorage.removeItem('user');
+        localStorage.removeItem(USER_KEY);
         setIsAuthenticated(false);
         setUser(null);
-        console.log('Sesión cerrada.');
-    };
-
-    // 7. El valor del contexto
-    const value = {
-        isAuthenticated,
-        user,
-        login,
-        logout,
-        register,
-        updateUserProfile,
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

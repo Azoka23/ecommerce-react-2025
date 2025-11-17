@@ -1,47 +1,189 @@
 /* src/components/Header/Header.css (AJUSTE FINAL PARA CENTRADO) */
 
+
+
+/******************************************************
+ * HEADER (paleta moderna)
+ ******************************************************/
 .main-header {
-    background-color: #ffffff; 
-    border-bottom: 2px solid #b79075; 
-    padding: 10px 40px;
-    
-    
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; 
-    align-items: center;
+    background-color: #b89f78; /* Arena suave */
+    border-bottom: 2px solid #b89f78; /* Oro apagado */
+    padding: 10px 20px;
+    position: relative;
+    top: auto;
+    z-index: auto;
 }
 
+/******************************************************
+ * LOGO
+ ******************************************************/
 .logo-container {
-    
-    grid-column: 2 / 3; 
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    gap: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #2b1e18; /* Mismo color que el footer */
+    border-radius: 50%; /* Mantiene el óvalo/círculo */
+    padding: 5px; /* Ajusta espacio entre la imagen y el borde */
 }
 
 .logo-img {
-    
-    height: 120px; 
-    width: 180px; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    height: 110px;
+    width: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    display: block;
 }
 
-
-.main-header nav {
-    
-    grid-column: 3 / 4; 
-    justify-self: end; 
-    
-   
+/******************************************************
+ * NAV
+ ******************************************************/
+nav {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
 }
 
-.main-header nav ul {
+nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 25px; 
+    gap: 30px;
+    align-items: center;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav a {
+    text-decoration: none; 
+    color: #1c1c1c; /* Negro suave */
+    font-weight: 700;
+    font-size: 1.2em;
+    padding: 5px 0;
+    transition: color 0.2s ease;
+}
+
+nav a:hover {
+    color: #8b5e3c; /* Cacao */
+}
+
+/******************************************************
+ * ICONO CARRITO
+ ******************************************************/
+.cart-nav-image-icon {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s ease-in-out;
+    vertical-align: middle;
+}
+
+.cart-nav-image-icon:hover {
+    transform: scale(1.2);
+}
+
+/******************************************************
+ * DROPDOWN
+ ******************************************************/
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background-color: #8b5e3c; /* Cacao */
+    min-width: 180px;
+
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content li a {
+    padding: 10px 15px;
+    display: block;
+    color: #faf9f6; /* Blanco cálido */
+}
+
+.dropdown-content li a:hover {
+    background-color: #b89f78; /* Oro apagado */
+}
+
+.nav-dropdown:hover .dropdown-content,
+.nav-dropdown.show-dropdown .dropdown-content {
+    display: block;
+}
+
+/******************************************************
+ * BOTÓN HOME FLOTANTE
+ ******************************************************/
+.home-button-float {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    background-color: #8b5e3c; /* Cacao */
+    color: #faf9f6; /* Blanco cálido */
+    border: none;
+
+    padding: 10px 14px;
+    border-radius: 50px;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+
+    z-index: 9999 !important;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.home-button-float:hover {
+    background-color: #b89f78; /* Oro apagado */
+    transform: scale(1.05);
+}
+
+/******************************************************
+ * TÍTULO DE BIENVENIDA (Ajustes de tamaño y espacio)
+ ******************************************************/
+
+ .welcome-title-container {
+    /* Centra todo el texto */
+    text-align: center; 
+    
+    /* Pequeño espacio debajo del texto antes del logo/nav */
+    padding-bottom: 10px; 
+}
+
+.welcome-title-container h1 {
+    /* Hacemos la letra más pequeña */
+    font-size: 1.5rem; 
+    
+    /* Reducimos el espacio que hay debajo del h1 */
+    margin-bottom: 3px; 
+    
+    /* Evitamos que tenga un margen superior excesivo */
+    margin-top: 5px; 
+    
+    /* Color de texto (usa el color oscuro de tu paleta) */
+    color: #2b1e18; 
+}
+.welcome-title-container p {
+    /* Hacemos la letra del subtítulo más pequeña */
+    font-size: 0.85rem; 
+    
+    /* Eliminamos todos los márgenes extra del párrafo */
+    margin: 0; 
+    
+    font-style: italic;
+    
+    /* Hacemos el texto un poco más sutil */
+    opacity: 0.8; 
 }

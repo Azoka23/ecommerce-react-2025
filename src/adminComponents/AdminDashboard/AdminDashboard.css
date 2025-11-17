@@ -138,3 +138,77 @@
         padding: 1rem;
     }
 }
+
+
+.admin-action-btn {
+  display: inline-flex;             /* flex para alinear icono y texto */
+  align-items: center;
+  gap: 6px;                         /* espacio entre icono y texto */
+  background: #6F4E37;              /* café oscuro */
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform .12s ease, box-shadow .12s ease;
+  font-size: 16px;                  /* un poquito más grande */
+}
+
+.admin-action-btn span.icon {
+  font-size: 20px;                  /* ícono más grande */
+  color: #FFD700;                   /* amarillo dorado para destacar */
+}
+
+.admin-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.admin-action-secondary {
+  background: #b79075;              /* acento más claro */
+  color: #4b3832;
+}
+
+.admin-action-secondary span.icon {
+  color: #FFC107;                   /* contraste con el fondo */
+}
+
+/* Floating buttons en esquina superior derecha */
+.floating-buttons {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+
+.floating-btn {
+  padding: 6px 10px;         /* más pequeños */
+  border: none;
+  border-radius: 30px;
+  background-color: #a09c90;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;           /* más discreto */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.floating-btn:hover {
+
+  transform: scale(1.1);
+  background-color: #d8bd6a;
+}
+
+.logout-btn {
+  background-color: #a09c90;
+  color: black;
+}
+
+.logout-btn:hover {
+  background-color: #d8bd6a;
+}

@@ -42,6 +42,12 @@ const fileInputRef = useRef(null);
         setErrors(prev => ({ ...prev, [name]: null }));
     };
 
+    const handleLogout = () => {
+    console.log("Cerrando sesión...");
+    window.location.href = "/";
+};
+
+
     const onFileChange = (e) => {
         const selectedFile = e.target.files ? e.target.files[0] : null;
         setFile(selectedFile); 
@@ -134,6 +140,16 @@ const fileInputRef = useRef(null);
                 onSubmit={handleSubmit} // <-- Si quieres usar onSubmit como en el UI
                 fileInputRef={fileInputRef}
             />
+
+            {/* Botones flotantes */}
+      <div className="floating-buttons">
+        <button className="floating-btn back-btn" onClick={() => window.history.back()}>
+          🔙 Volver
+        </button>
+        <button className="floating-btn logout-btn" onClick={handleLogout}>
+          🚪 Cerrar sesión
+        </button>
+      </div>
         </div>
     );
 };

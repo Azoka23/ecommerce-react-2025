@@ -76,3 +76,42 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+/* Floating buttons en esquina superior derecha */
+.floating-buttons {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+
+.floating-btn {
+  padding: 6px 10px;         /* más pequeños */
+  border: none;
+  border-radius: 30px;
+  background-color: #a09c90;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;           /* más discreto */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.floating-btn:hover {
+
+  transform: scale(1.1);
+  background-color: #d8bd6a;
+}
+
+.logout-btn {
+  background-color: #a09c90;
+  color: black;
+}
+
+.logout-btn:hover {
+  background-color: #d8bd6a;
+}
