@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { ItemDetail } from '../ItemDetail/ItemDetail';
 import { useParams } from 'react-router-dom';
 // 🛑 Importar la nueva función de servicio (asumiendo que la agregaste en Products.js)
-import { getProductById } from '../../services/Products'; 
+import { getProductById } from '../../services/products'; 
 
 export const ItemDetailContainer = () => { 
     

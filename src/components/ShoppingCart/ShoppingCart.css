@@ -4,6 +4,9 @@
 
 /* Código que ya tenías */
 .shopping-cart {
+
+
+
   position: relative; 
   margin-bottom: 60px; 
   margin-left: auto;
@@ -16,8 +19,8 @@
   background-color: #f9f9f9;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); 
   
-  width: 90%;          
-  max-width: 500px; 
+  width: 95%;          
+  max-width: 750px; 
   
   display: flex;
   flex-direction: column;
@@ -115,3 +118,6 @@
     display: flex;
     flex-direction: column; 
 }
+
+
+

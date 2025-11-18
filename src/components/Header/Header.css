@@ -164,7 +164,7 @@ nav a:hover {
 
 .welcome-title-container h1 {
     /* Hacemos la letra más pequeña */
-    font-size: 1.5rem; 
+    font-size: 2rem; 
     
     /* Reducimos el espacio que hay debajo del h1 */
     margin-bottom: 3px; 
@@ -177,7 +177,7 @@ nav a:hover {
 }
 .welcome-title-container p {
     /* Hacemos la letra del subtítulo más pequeña */
-    font-size: 0.85rem; 
+    font-size: 0.95rem; 
     
     /* Eliminamos todos los márgenes extra del párrafo */
     margin: 0; 

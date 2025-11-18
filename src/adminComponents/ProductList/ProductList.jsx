@@ -16,6 +16,8 @@ export const ProductList = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null); // 👈 modal
+const [loading, setLoading] = useState(true);
+
 
   const loadProducts = async () => {
     try {
@@ -23,6 +25,8 @@ export const ProductList = () => {
       setProducts(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,6 +104,10 @@ export const ProductList = () => {
   const handleCancelEdit = () => {
     setEditingProduct(null);
   };
+if (loading) {
+  return <div className="loading-products">Cargando productos...</div>;
+}
+
 
   return (
     <div className="products-container">
