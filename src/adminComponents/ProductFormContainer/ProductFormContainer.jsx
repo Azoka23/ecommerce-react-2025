@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { ProductsFormUI } from '../ProductsFormUI/ProductsFormUI';
-import { validateProducts } from '../../utils/ValidateProducts';
+import { validateProducts } from '../../utils/validateProducts';
 import { uploadToImgbb } from '../../services/uploadImage'; 
 import { createProduct, updateProduct } from '../../services/Products'; // <-- Importamos updateProduct
 
